@@ -2,22 +2,36 @@ def R_type_inst(rs1,rs2,rd):
     funct_7 = {"add": "0000000","sub" :"0100000","slt": "0000000","srl": "0000000","or": "0000000","and": "0000000"}
     funct_3 = {"add": "000","sub" :"000","slt": "010","srl": "101","or": "110","and": "111"}
     opcode = "0110011"
+    target=funct_7+rs2+rs1+funct_3+rd+opcode
+    with open(output_file, "a") as out_file: 
+        out_file.write(target+"\n")
 
 
 def I_type_inst(imm,rs1,rd):
     funct3 = {"lw": "010","addi": "000","jalr" :"000"}
     opcode = {"lw": "0000011","addi": "0010011","jalr" :"1100111"}
+    target=imm+rs1+funct3+rd+opcode
+    with open(output_file, "a") as out_file: 
+        out_file.write(target+"\n")
 
 def S_type_inst(rs1,rs2,imm4,imm5):
     opcode = "0100011"
     funct3  = "010"
+    target=imm5+rs2+rs1+funct3+imm4+opcode
+    with open(output_file, "a") as out_file: 
+        out_file.write(target+"\n")
 
 def B_type_inst(rs1,rs2,imm4,imm10):
     funct3 = {"beq": "000","bne": "001", "blt": "100"}
     opcode = "1100011"
+    
 
 def J_type_inst(rd,imm):
     opcode = "1101111"
+    target=imm[19]+imm[9:0]+imm[10]+imm[18:11]+rd+opcode
+    with open(output_file, "a") as out_file: 
+        out_file.write(target+"\n")
+
 def register2binary(reg_name):
     registerer_map = {
         "x0": "00000", "zero": "00000","x1": "00001", "ra": "00001","x2": "00010", "sp": "00010","x3": "00011", "gp": "00011","x4": "00100", "tp": "00100","x5": "00101", "t0": "00101","x6": "00110", "t1": "00110","x7": "00111", "t2": "00111",
