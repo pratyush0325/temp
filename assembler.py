@@ -38,9 +38,22 @@ def S_type_inst(rs1,rs2,imm):
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
-def B_type_inst(rs1,rs2,imm4,imm10):
-    funct3 = {"beq": "000","bne": "001", "blt": "100"}
+def B_type_inst(rs1,rs2,imm,label,pc,inst):
+    funct3 = {"beq":"000", "bne":"001", "blt":"100", "bge":"101", "bltu":"110", "bgeu":"111"}
     opcode = "1100011"
+    if(imm.isnumeric() or (imm[0]=="-" and imm[1:].isnumeric()) or imm is labels):
+            if (imm.isnumeric() or (imm[0]=="-" and imm[1:].isnumeric())):
+                offset=int(imm)*4
+                imm_13bit = imm_to_bin(int(imm),13)
+            else:
+                offset = labels[imm] - pc
+                imm_13bit=imm_to_bin(offset,13)
+
+            final = imm_13bit[-13] + imm_13bit[-11] + imm_13bit[-10:-5] + rs2 + rs1+ funct3[inst] + imm_13bit[-5:-1] + imm_13bit[-12] + opcode
+    else:
+        if(imm not in labels):
+            print("Error on line:",int(pc/4)+1,"->No such label")
+            break
     
 def J_type_inst(rd,imm):
     opcode = "1101111"
