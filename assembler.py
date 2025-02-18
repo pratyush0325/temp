@@ -77,7 +77,11 @@ def read_and_tokenize(file_path):
             line = line.strip()  
             if(line == ""):
                 pass
-            words = line.split()
+            temp = line.split("")
+            
+            words = temp[1].split("")
+            words.insert(0,temp[0])
+          
             n = len(words[0])
             if(((words[0])[n-1]) == ":"):
                 label_list[words] = pc
