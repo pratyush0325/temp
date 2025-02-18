@@ -1,8 +1,10 @@
-def R_type_inst(rs1,rs2,rd):
+def R_type_inst(rs1,rs2,rd,inst):
     funct_7 = {"add": "0000000","sub" :"0100000","slt": "0000000","srl": "0000000","or": "0000000","and": "0000000"}
     funct_3 = {"add": "000","sub" :"000","slt": "010","srl": "101","or": "110","and": "111"}
     opcode = "0110011"
-    target=funct_7+rs2+rs1+funct_3+rd+opcode
+    f7 = funct_7["inst"]
+    f3 = funct_3["inst"]
+    target=f7+rs2+rs1+f3+rd+opcode
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
@@ -10,14 +12,16 @@ def R_type_inst(rs1,rs2,rd):
 def I_type_inst(imm,rs1,rd):
     funct3 = {"lw": "010","addi": "000","jalr" :"000"}
     opcode = {"lw": "0000011","addi": "0010011","jalr" :"1100111"}
-    target=imm+rs1+funct3+rd+opcode
+    f3 = funct_3["inst"]
+    target=imm+rs1+f3+rd+opcode
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
 def S_type_inst(rs1,rs2,imm4,imm5):
     opcode = "0100011"
     funct3  = "010"
-    target=imm5+rs2+rs1+funct3+imm4+opcode
+    f3 = funct_3["inst"]
+    target=imm5+rs2+rs1+f3+imm4+opcode
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
