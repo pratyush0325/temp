@@ -23,15 +23,15 @@ def I_type_inst(inst,rd,rs1,imm):
     funct_3 = {"lw": "010","addi": "000","jalr" :"000"}
     opcode = {"lw": "0000011","addi": "0010011","jalr" :"1100111"}
     f3 = funct_3["inst"]
-    target=imm_to_bin(imm,12)+register2binary(rs1)+f3+register2binary(rd)+opcode
+    target=imm_to_bin(int(imm),12)+register2binary(rs1)+f3+register2binary(rd)+opcode
     with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
-def S_type_inst(rs1,rs2,imm):
+def S_type_inst(rs2,rs1,imm):
     opcode = "0100011"
     funct_3 = "010"
     
-    imm=imm_to_bin(imm,12)
+    imm=imm_to_bin(int(imm),12)
     imm5=imm[-12:-5]
     imm7=imm[-5:]
     target=imm5+register2binary(rs2)+register2binary(rs1)+funct_3+imm7+opcode
@@ -58,7 +58,7 @@ def B_type_inst(rs1,rs2,imm,label,pc,inst):
 def J_type_inst(rd,imm):
     opcode = "1101111"
     
-    imm=imm_to_bin(imm,20)
+    imm=imm_to_bin(int(imm),20)
     target=imm[-20]+imm[-10:]+imm[-11]+imm[-19:-11]+register2binary(rd)+opcode
     with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
@@ -108,11 +108,11 @@ def read_and_tokenize(file_path):
         I_type_inst(words[0],words[1],words[2],words[3])
     elif inst in S_type:
 
-        pass
+        S_type_inst(words[1],words[2],words[3])
     elif inst in B_type:
         pass
     elif inst in J_type:
-        pass
+        J_type_inst(words[1],words[2])
 
 def imm_to_bin(num,length):
 
