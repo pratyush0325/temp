@@ -8,33 +8,33 @@ def register2binary(reg_name):
     }
     return registerer_map.get(reg_name, "Invalid register")
 
-def R_type_inst(rs1,rs2,rd,inst):
+def R_type_inst(inst,rd,rs1,rs2):
     funct_7 = {"add": "0000000","sub" :"0100000","slt": "0000000","srl": "0000000","or": "0000000","and": "0000000"}
     funct_3 = {"add": "000","sub" :"000","slt": "010","srl": "101","or": "110","and": "111"}
     opcode = "0110011"
-    f7 = funct_7["inst"]
-    f3 = funct_3["inst"]
+    f7 = funct_7[inst]
+    f3 = funct_3[inst]
     target=f7+register2binary(rs2)+register2binary(rs1)+f3+register2binary(rd)+opcode
     with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
 
-def I_type_inst(imm,rs1,rd):
+def I_type_inst(inst,rd,rs1,imm):
     funct_3 = {"lw": "010","addi": "000","jalr" :"000"}
     opcode = {"lw": "0000011","addi": "0010011","jalr" :"1100111"}
     f3 = funct_3["inst"]
-    target=imm_to_bin(imm,12)+rs1+f3+rd+opcode
+    target=imm_to_bin(imm,12)+register2binary(rs1)+f3+register2binary(rd)+opcode
     with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
 def S_type_inst(rs1,rs2,imm):
     opcode = "0100011"
     funct_3 = "010"
-    f3 = funct_3["inst"]
+    
     imm=imm_to_bin(imm,12)
     imm5=imm[-12:-5]
     imm7=imm[-5:]
-    target=imm5+rs2+rs1+f3+imm7+opcode
+    target=imm5+register2binary(rs2)+register2binary(rs1)+funct_3+imm7+opcode
     with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
@@ -59,7 +59,7 @@ def J_type_inst(rd,imm):
     opcode = "1101111"
     
     imm=imm_to_bin(imm,20)
-    target=imm[-20]+imm[-10:]+imm[-11]+imm[-19:-11]+rd+opcode
+    target=imm[-20]+imm[-10:]+imm[-11]+imm[-19:-11]+register2binary(rd)+opcode
     with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
@@ -102,10 +102,9 @@ def read_and_tokenize(file_path):
             words[3] = temp[0]
     inst = words[0]
     if inst in R_type:
-        R_type_inst()
+        R_type_inst(words[0],words[1],words[2],words[3])
     elif inst in I_type:
-
-        pass
+        I_type_inst(words[0],words[1],words[2],words[3])
     elif inst in S_type:
 
         pass
