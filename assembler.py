@@ -77,9 +77,9 @@ def read_and_tokenize(file_path):
             line = line.strip()  
             if(line == ""):
                 pass
-            temp = line.split("")
+            temp = line.split(" ")
             
-            words = temp[1].split("")
+            words = temp[1].split(",")
             words.insert(0,temp[0])
           
             n = len(words[0])
