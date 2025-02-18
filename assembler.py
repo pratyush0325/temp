@@ -27,9 +27,9 @@ def I_type_inst(imm,rs1,rd):
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
-def S_type_inst(rs1,rs2,imm4,imm5):
+def S_type_inst(rs1,rs2,imm):
     opcode = "0100011"
-    funct3  = "010"
+    funct3 = "010"
     f3 = funct_3["inst"]
     imm=imm_to_bin(imm,12)
     imm5=imm[-12:-5]
@@ -42,7 +42,6 @@ def B_type_inst(rs1,rs2,imm4,imm10):
     funct3 = {"beq": "000","bne": "001", "blt": "100"}
     opcode = "1100011"
     
-
 def J_type_inst(rd,imm):
     opcode = "1101111"
     
@@ -50,8 +49,6 @@ def J_type_inst(rd,imm):
     target=imm[-20]+imm[-10:]+imm[-11]+imm[-19:-11]+rd+opcode
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
-
-
 
 def read_and_tokenize(file_path):
 
