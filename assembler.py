@@ -85,5 +85,20 @@ def read_and_tokenize(file_path):
     elif inst in J_type:
         pass
 
+def imm_to_bin(num,length):
+
+
+    if(num>=0):   
+
+        bin_str = bin(num)                                   
+        bin_str = bin_str[2:]                             
+        bin_str = '0'*(length-len(bin_str)) + bin_str  
+
+    elif(num<0):                                               
+        bin_str = bin((abs(num)^((2**length)-1)) + 1)        
+        bin_str = bin_str[2:]                             
+        bin_str = '1'*(length-len(bin_str)) + bin_str
+ 
+    return bin_str
 
         
