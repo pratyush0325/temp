@@ -80,7 +80,7 @@ def read_and_tokenize(file_path):
             temp = line.split(" ")
             n = len(temp[0])
             if(((temp[0])[n-1]) == ":"):
-                label_list[temp[0]] = pc
+                label_list[temp[0][:n-1]] = pc
                 temp.pop(0)
                 
             words = temp[1].split(",")
