@@ -1,21 +1,3 @@
-def Inst(inst):
-    R_type = ["add", "sub", "slt", "srl", "or", "and"]
-    I_type = ["lw", "addi", "jalr"]
-    S_type = ["sw"]
-    B_type = ["beq", "bne", "blt"]
-    J_type = ["jal"]
-    if inst in R_type:
-        pass
-    elif inst in I_type:
-        pass
-    elif inst in S_type:
-        pass
-    elif inst in B_type:
-        pass
-    elif inst in J_type:
-        pass
-
-
 def R_type_inst(rs1,rs2,rd):
     funct_7 = {"add": "0000000","sub" :"0100000","slt": "0000000","srl": "0000000","or": "0000000","and": "0000000"}
     funct_3 = {"add": "000","sub" :"000","slt": "010","srl": "101","or": "110","and": "111"}
