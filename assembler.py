@@ -76,7 +76,7 @@ def read_and_tokenize(file_path):
 
             line = line.strip()  
             if(line == ""):
-                pass
+                continue
             temp = line.split(" ")
             
             words = temp[1].split(",")
