@@ -15,27 +15,27 @@ def R_type_inst(rs1,rs2,rd,inst):
     f7 = funct_7["inst"]
     f3 = funct_3["inst"]
     target=f7+register2binary(rs2)+register2binary(rs1)+f3+register2binary(rd)+opcode
-    with open(output_file, "a") as out_file: 
+    with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
 
 def I_type_inst(imm,rs1,rd):
-    funct3 = {"lw": "010","addi": "000","jalr" :"000"}
+    funct_3 = {"lw": "010","addi": "000","jalr" :"000"}
     opcode = {"lw": "0000011","addi": "0010011","jalr" :"1100111"}
     f3 = funct_3["inst"]
     target=imm_to_bin(imm,12)+rs1+f3+rd+opcode
-    with open(output_file, "a") as out_file: 
+    with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
 def S_type_inst(rs1,rs2,imm):
     opcode = "0100011"
-    funct3 = "010"
+    funct_3 = "010"
     f3 = funct_3["inst"]
     imm=imm_to_bin(imm,12)
     imm5=imm[-12:-5]
     imm7=imm[-5:]
     target=imm5+rs2+rs1+f3+imm7+opcode
-    with open(output_file, "a") as out_file: 
+    with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
 def B_type_inst(rs1,rs2,imm,label,pc,inst):
@@ -60,7 +60,7 @@ def J_type_inst(rd,imm):
     
     imm=imm_to_bin(imm,20)
     target=imm[-20]+imm[-10:]+imm[-11]+imm[-19:-11]+rd+opcode
-    with open(output_file, "a") as out_file: 
+    with open("output_file", "a") as out_file: 
         out_file.write(target+"\n")
 
 def read_and_tokenize(file_path):
@@ -86,21 +86,28 @@ def read_and_tokenize(file_path):
             if(((words[0])[n-1]) == ":"):
                 label_list[words] = pc
                 words.pop(0)
-            if len(words) != 4:
-                return "Invalid instruction format"
+            
             pc +=4
     R_type = ["add", "sub", "slt", "srl", "or", "and"]
     I_type = ["lw", "addi", "jalr"]
     S_type = ["sw"]
     B_type = ["beq", "bne", "blt"]
     J_type = ["jal"]
-
+    if len(words) ==3:
+        if("(" in words[2]):
+            temp = words[2].split("(")
+            temp[1].replace(")","")
+            words.pop()
+            words[2] = temp[1]
+            words[3] = temp[0]
     inst = words[0]
     if inst in R_type:
         R_type_inst()
     elif inst in I_type:
+
         pass
     elif inst in S_type:
+
         pass
     elif inst in B_type:
         pass
@@ -122,5 +129,3 @@ def imm_to_bin(num,length):
         bin_str = '1'*(length-len(bin_str)) + bin_str
  
     return bin_str
-
-        
