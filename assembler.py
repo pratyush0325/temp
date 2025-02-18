@@ -23,7 +23,7 @@ def I_type_inst(imm,rs1,rd):
     funct3 = {"lw": "010","addi": "000","jalr" :"000"}
     opcode = {"lw": "0000011","addi": "0010011","jalr" :"1100111"}
     f3 = funct_3["inst"]
-    target=imm+rs1+f3+rd+opcode
+    target=imm_to_bin(imm,12)+rs1+f3+rd+opcode
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
@@ -31,7 +31,10 @@ def S_type_inst(rs1,rs2,imm4,imm5):
     opcode = "0100011"
     funct3  = "010"
     f3 = funct_3["inst"]
-    target=imm5+rs2+rs1+f3+imm4+opcode
+    imm=imm_to_bin(imm,12)
+    imm5=imm[-12:-5]
+    imm7=imm[-5:]
+    target=imm5+rs2+rs1+f3+imm7+opcode
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
@@ -42,7 +45,9 @@ def B_type_inst(rs1,rs2,imm4,imm10):
 
 def J_type_inst(rd,imm):
     opcode = "1101111"
-    target=imm[19]+imm[9:0]+imm[10]+imm[18:11]+rd+opcode
+    
+    imm=imm_to_bin(imm,20)
+    target=imm[-20]+imm[-10:]+imm[-11]+imm[-19:-11]+rd+opcode
     with open(output_file, "a") as out_file: 
         out_file.write(target+"\n")
 
