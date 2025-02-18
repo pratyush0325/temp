@@ -78,10 +78,10 @@ def read_and_tokenize(file_path):
             if(line == ""):
                 continue
             temp = line.split(" ")
-            n = len(words[0])
-            if(((words[0])[n-1]) == ":"):
-                label_list[words] = pc
-                words.pop(0)
+            n = len(temp[0])
+            if(((temp[0])[n-1]) == ":"):
+                label_list[temp[0]] = pc
+                temp.pop(0)
                 
             words = temp[1].split(",")
             words.insert(0,temp[0])
